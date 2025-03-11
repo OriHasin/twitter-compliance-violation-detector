@@ -1,0 +1,112 @@
+{
+    "username": "john_smith_employee",
+    "tweets": [
+      {
+        "id": "1501234567890123456",
+        "text": "Just had a great team meeting today! Excited about our public roadmap for 2025. Love working with such innovative colleagues! #ProudEmployee",
+        "created_at": "2025-03-01T09:45:23Z"
+      },
+      {
+        "id": "1501345678901234567",
+        "text": "Heading to the annual industry conference tomorrow. Looking forward to representing our company and connecting with peers! #ProfessionalDevelopment",
+        "created_at": "2025-03-02T14:12:37Z"
+      },
+      {
+        "id": "1501456789012345678",
+        "text": "Just saw our Q1 revenue projections and wow! We're going to crush our targets this year. $50M in the first quarter alone! #CompanySecrets",
+        "created_at": "2025-03-03T11:08:42Z",
+        "policy_violation": "CONFID-001"
+      },
+      {
+        "id": "1501567890123456789",
+        "text": "Check out this article about sustainable business practices. This is why I'm proud to work for a company that prioritizes environmental responsibility.",
+        "created_at": "2025-03-04T08:22:15Z"
+      },
+      {
+        "id": "1501678901234567890",
+        "text": "Our management is completely clueless. CEO just made another stupid decision that's going to tank our stock. What a joke this company has become.",
+        "created_at": "2025-03-05T19:36:51Z",
+        "policy_violation": "REP-001"
+      },
+      {
+        "id": "1501789012345678901",
+        "text": "Beautiful day for a coffee break! Working remotely has its perks. #WorkLifeBalance #HomeOffice",
+        "created_at": "2025-03-06T10:17:33Z"
+      },
+      {
+        "id": "1501890123456789012",
+        "text": "Just finished my certification! Thanks to my company for supporting continuous learning and professional development.",
+        "created_at": "2025-03-07T16:45:22Z"
+      },
+      {
+        "id": "1501901234567890123",
+        "text": "Dave from accounting is such an idiot. How did someone so incompetent even get hired? Constantly making mistakes that others have to fix. #OfficeProblems",
+        "created_at": "2025-03-08T12:33:47Z",
+        "policy_violation": "HARAS-001"
+      },
+      {
+        "id": "1502012345678901234",
+        "text": "Just finished watching the latest episode of Succession. Such a great show! What are your favorite TV series?",
+        "created_at": "2025-03-09T20:15:28Z"
+      },
+      {
+        "id": "1502123456789012345",
+        "text": "At a great industry networking event tonight. Met so many interesting professionals!",
+        "created_at": "2025-03-10T21:42:19Z"
+      },
+      {
+        "id": "1502234567890123456",
+        "text": "This project is driving me f***ing insane! I'm so sick of this s**t. Management keeps changing requirements every goddamn day. #WorkingLate #FML",
+        "created_at": "2025-03-11T23:18:54Z",
+        "policy_violation": "PROF-001"
+      },
+      {
+        "id": "1502345678901234567",
+        "text": "Enjoying my weekend hike! Work-life balance is so important for productivity and mental health. #SelfCare #Outdoors",
+        "created_at": "2025-03-12T14:29:36Z"
+      },
+      {
+        "id": "1502456789012345678",
+        "text": "Check out this sneak peek of our unreleased product! This new feature is going to revolutionize how our customers use our software. Launch is in 2 months! #ProductLeak",
+        "created_at": "2025-03-13T13:11:05Z",
+        "policy_violation": "CONFID-001"
+      },
+      {
+        "id": "1502567890123456789",
+        "text": "Had a productive meeting with the marketing team today. Love collaborating across departments!",
+        "created_at": "2025-03-14T17:23:48Z"
+      },
+      {
+        "id": "1502678901234567890",
+        "text": "We finally hired some women on our engineering team. They're not as technical as the guys, but I guess it helps with diversity quotas. #DiversityHire",
+        "created_at": "2025-03-15T09:47:12Z",
+        "policy_violation": "DISCR-001"
+      },
+      {
+        "id": "1502789012345678901",
+        "text": "Just got the company-wide email about our annual charity drive. Great to see us giving back to the community! #CorporateSocialResponsibility",
+        "created_at": "2025-03-16T11:39:27Z"
+      },
+      {
+        "id": "1502890123456789012",
+        "text": "Attending the product training webinar. Always good to stay updated on our offerings!",
+        "created_at": "2025-03-17T15:52:41Z"
+      },
+      {
+        "id": "1502901234567890123",
+        "text": "Our competitors just launched their new product and it's garbage compared to what we're building. Their engineering team is a joke. #CompetitorFail",
+        "created_at": "2025-03-18T18:07:33Z",
+        "policy_violation": "REP-001"
+      },
+      {
+        "id": "1503012345678901234",
+        "text": "Just completed the annual compliance training. Important reminder about our responsibilities as employees. #CorporateEthics",
+        "created_at": "2025-03-19T10:23:18Z"
+      },
+      {
+        "id": "1503123456789012345",
+        "text": "Happy to announce I'm celebrating 3 years at this amazing company today! Grateful for all the opportunities and wonderful colleagues. #WorkAnniversary",
+        "created_at": "2025-03-20T13:36:59Z"
+      }
+    ]
+  }

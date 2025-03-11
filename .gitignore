@@ -1,0 +1,56 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+ENV/
+*.env
+
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Logs
+logs/
+*.log
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# API keys and secrets
+.secret
+config.local.py
+
+# Uploaded files
+data/compliance_policies/*
+!data/compliance_policies/.gitkeep
+
+# Temporary files
+tmp/
+temp/
+
+# Test coverage
+.coverage
+htmlcov/
+
+# PyCharm files
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints

@@ -1,0 +1,32 @@
+{
+    "policy_name": "Employee Social Media Policy",
+    "version": "1.0",
+    "description": "Basic rules for employee conduct on social media platforms",
+    "rules": [
+      {
+        "rule_id": "CONFID-001",
+        "category": "Confidentiality",
+        "description": "Sharing confidential company information including unreleased products, financial data, or internal communications"
+      },
+      {
+        "rule_id": "REP-001",
+        "category": "Company Reputation",
+        "description": "Posts that damage company reputation, including negative comments about the company, its products, or leadership"
+      },
+      {
+        "rule_id": "HARAS-001",
+        "category": "Workplace Conduct",
+        "description": "Harassment, bullying, or unprofessional comments about colleagues, customers, or partners"
+      },
+      {
+        "rule_id": "PROF-001",
+        "category": "Professionalism",
+        "description": "Use of inappropriate language, profanity, or unprofessional tone that reflects poorly on employment status"
+      },
+      {
+        "rule_id": "DISCR-001",
+        "category": "Discrimination",
+        "description": "Discriminatory comments related to race, gender, religion, sexual orientation, age, or disability"
+      }
+    ]
+  }
