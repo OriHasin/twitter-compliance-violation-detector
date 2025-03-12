@@ -7,7 +7,7 @@ from models import Violation, ScannedUser
 from sqlalchemy import select, and_
 from pydantic import BaseModel
 from tweets_processor import process_user_tweets
-from policy_routes import load_policy_rules
+from .policy_routes import load_policy_rules
 
 
 
@@ -26,11 +26,32 @@ class ProcessTweetsInput(BaseModel):
 # Helper function to create a fresh DB session for background tasks
 async def process_tweets_background(username: str, policy_rules: List[str]):
     """Process tweets using a dedicated database session per task."""
+    print(f"🚀 STARTING BACKGROUND TASK for {username}")
     async with AsyncSessionLocal() as session:
         try:
+            print(f"⏳ Processing tweets for {username}")
             await process_user_tweets(username, policy_rules, session)
+            print(f"✅ Completed processing tweets for {username}")
         except Exception as e:
-            print(f"Error processing tweets for {username}: {str(e)}")
+            print(f"❌ Error processing tweets for user: {username}. Error: {e}")
+
+
+
+
+
+
+async def process_tweets_concurrently(usernames: List[str], policy_rules: List[str]):
+    """Process multiple usernames concurrently."""
+    import asyncio
+    
+    # Create tasks for all usernames to process concurrently
+    tasks = []
+    for username in usernames:
+        tasks.append(process_tweets_background(username, policy_rules))
+    
+    # Run all tasks concurrently
+    await asyncio.gather(*tasks)
+
 
 
 
@@ -41,10 +62,14 @@ async def process_tweets(input_data: ProcessTweetsInput, background_tasks: Backg
     try:
         # Load policy rules
         policy_rules = await load_policy_rules(input_data.policy_name)
-        
-        # Add background task for each username with fresh DB sessions
-        for username in input_data.usernames:
-            background_tasks.add_task(process_tweets_background, username, policy_rules)
+        print(f'✅ Loaded policy rules for {input_data.policy_name}')
+
+        # Add a single background task that processes all usernames concurrently
+        background_tasks.add_task(
+            process_tweets_concurrently, 
+            input_data.usernames, 
+            policy_rules
+        )
         
         # Prepare appropriate message based on number of usernames
         count = len(input_data.usernames)

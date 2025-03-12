@@ -2,36 +2,45 @@ import asyncio
 from tweets_fetcher import fetch_all_tweets
 from openai_predictor import check_tweet_compliance
 from models import Violation
-from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-from database import get_db
 
 
 
 
 async def process_user_tweets(username: str, policy_rules: list, session: AsyncSession):
+    user_violate_tweets = []
     tweets = await fetch_all_tweets(username, session)
-
+    print(f'✅ Fetched {len(tweets)} tweets for {username}')
 
     async def process_single_tweet(tweet_data):
-        compliance_result = await check_tweet_compliance(tweet_data["text"], policy_rules)
+        try:
+            compliance_result = await check_tweet_compliance(tweet_data["text"], policy_rules)
+            if compliance_result.get("violation") == "YES":
+                violation = Violation(
+                    tweet=compliance_result.get("tweet", ""),
+                    policy=compliance_result.get("policy", ""),
+                    rule_id=compliance_result.get("rule_id", ""),
+                    rule_violated=compliance_result.get("rule_violated", ""),
+                    reason=compliance_result.get("reason", ""),
+                    posted_at=tweet_data.get("created_at", "")
+                )
+                user_violate_tweets.append(violation)
+                print(f'🚨 Violation found for tweet: {tweet_data["text"]}, by user: {username}')
 
-        if compliance_result["violation"] == "YES":
-            violation = Violation(
-                tweet=tweet_data["text"],
-                policy=compliance_result["policy"],
-                rule_id=compliance_result["rule_id"], 
-                rule_violated=compliance_result["rule_violated"],
-                reason=compliance_result["reason"],
-                posted_at=tweet_data["created_at"]
-            )
-            session.add(violation)
-            await session.commit()
+        except Exception as e:
+            print(f'❌ Error processing a specific tweet from {username}, Error: {str(e)}')
 
 
-    # Create tasks for each tweet - placing them in ready queue asyncio
     tasks = [asyncio.create_task(process_single_tweet(tweet)) for tweet in tweets]
-
-
     # Wait for all tasks to complete (concurrent execution)
     await asyncio.gather(*tasks)
+
+    
+    # commit the violations to the database
+    if user_violate_tweets:
+        print(f'🔍 Found {len(user_violate_tweets)} violations for {username}')
+        session.add_all(user_violate_tweets)
+        await session.commit()
+        print(f'✅ Committed {len(user_violate_tweets)} violations for {username} to the database')
+    else:
+        print(f'🎉 No violations found for {username}')
