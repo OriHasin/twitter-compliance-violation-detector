@@ -56,7 +56,7 @@ async def process_tweets_concurrently(usernames: List[str], policy_rules: List[s
 
 
 
-@tweet_router.post("/process")
+@tweet_router.post("/process", status_code=202)
 async def process_tweets(input_data: ProcessTweetsInput, background_tasks: BackgroundTasks):
     """Process tweets from one or more Twitter usernames."""
     try:
