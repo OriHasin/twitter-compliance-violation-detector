@@ -1,6 +1,6 @@
 from openai import AsyncOpenAI
 import json
-from config import OPENAI_API_KEY
+from app.core.config import OPENAI_API_KEY
 
 
 

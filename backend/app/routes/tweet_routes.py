@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
-from database import get_db, AsyncSessionLocal
+from app.core.database import get_db, AsyncSessionLocal
 import datetime
-from models import Violation, ScannedUser
+from app.core.models import Violation, ScannedUser
 from sqlalchemy import select, and_
 from pydantic import BaseModel
-from tweets_processor import process_user_tweets
+from ..services.tweets_processor import process_user_tweets
 from .policy_routes import load_policy_rules
 
 

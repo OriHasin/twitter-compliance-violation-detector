@@ -17,5 +17,5 @@ DB_NAME = os.getenv("DB_NAME", "violation_db")
 DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 # Application settings
-UPLOAD_DIR = os.getenv("UPLOAD_DIR", "data/compliance_policies/")
-USE_SAMPLE_DATA = True
+UPLOAD_DIR = "data/compliance_policies/"
+USE_SAMPLE_DATA = False

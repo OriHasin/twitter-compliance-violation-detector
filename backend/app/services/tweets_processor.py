@@ -1,7 +1,7 @@
 import asyncio
-from tweets_fetcher import fetch_all_tweets
-from openai_predictor import check_tweet_compliance
-from models import Violation
+from app.services.tweets_fetcher import fetch_all_tweets
+from app.services.openai_predictor import check_tweet_compliance
+from app.core.models import Violation
 from sqlalchemy.ext.asyncio import AsyncSession
 
 

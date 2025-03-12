@@ -1,6 +1,5 @@
-import datetime
 from sqlalchemy import Column, DateTime, Integer, String, Text, func
-from database import Base
+from app.core.database import Base
 
 
 class Violation(Base):

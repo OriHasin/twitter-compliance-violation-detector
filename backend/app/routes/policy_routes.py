@@ -3,7 +3,7 @@ from typing import List
 import os
 import json
 from pathlib import Path
-from config import UPLOAD_DIR
+from ..core.config import UPLOAD_DIR
 
 
 
@@ -18,7 +18,8 @@ policy_router = APIRouter(prefix="/policies", tags=["Policies"])
 async def load_policy_rules(policy_name: str) -> List[str]:
     """Load policy rules from a JSON file."""
     file_path = os.path.join(UPLOAD_DIR, f"{policy_name}.json")
-    
+    print(os.getcwd())
+    print(file_path)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail=f"Policy file '{policy_name}' not found")
     

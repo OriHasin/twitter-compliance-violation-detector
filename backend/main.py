@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 import os
-from routes import policy_router, tweet_router, system_router
-from database import create_tables
-from config import UPLOAD_DIR
-
+from app.routes import policy_router, tweet_router, system_router
+from app.core.database import create_tables
+from app.core.config import UPLOAD_DIR
 
 
 @asynccontextmanager
@@ -16,7 +15,7 @@ async def lifespan(app: FastAPI):
     
     yield  # Application runs here
     
-    # Shutdown: cleanup (if needed)
+    # Shutdown: cleanup 
     pass
 
 

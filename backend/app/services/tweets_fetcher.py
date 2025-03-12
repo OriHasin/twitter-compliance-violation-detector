@@ -2,8 +2,8 @@ import tweepy
 from tweepy.errors import TooManyRequests
 import datetime
 import json
-from models import ScannedUser
-from config import TWITTER_BEARER_TOKEN, USE_SAMPLE_DATA
+from app.core.models import ScannedUser
+from app.core.config import TWITTER_BEARER_TOKEN, USE_SAMPLE_DATA
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
