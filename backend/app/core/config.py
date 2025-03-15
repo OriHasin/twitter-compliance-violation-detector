@@ -18,4 +18,5 @@ DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT
 
 # Application settings
 UPLOAD_DIR = "data/compliance_policies/"
-USE_SAMPLE_DATA = False
+USE_SAMPLE_DATA = True
+DELETE_USERNAMES = False

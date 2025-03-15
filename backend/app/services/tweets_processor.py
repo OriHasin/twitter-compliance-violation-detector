@@ -17,6 +17,7 @@ async def process_user_tweets(username: str, policy_rules: list, session: AsyncS
             compliance_result = await check_tweet_compliance(tweet_data["text"], policy_rules)
             if compliance_result.get("violation") == "YES":
                 violation = Violation(
+                    username=username,
                     tweet=compliance_result.get("tweet", ""),
                     policy=compliance_result.get("policy", ""),
                     rule_id=compliance_result.get("rule_id", ""),

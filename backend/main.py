@@ -10,6 +10,7 @@ from app.core.config import UPLOAD_DIR
 async def lifespan(app: FastAPI):
     # Startup: initialize database and create directories
     await create_tables()
+    
     os.makedirs(UPLOAD_DIR, exist_ok=True)
     print("✅ Application initialized successfully")
     

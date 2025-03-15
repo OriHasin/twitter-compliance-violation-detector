@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
 from app.core.database import get_db, AsyncSessionLocal
 import datetime
+import asyncio
 from app.core.models import Violation, ScannedUser
 from sqlalchemy import select, and_
 from pydantic import BaseModel
@@ -23,7 +24,7 @@ class ProcessTweetsInput(BaseModel):
 
 
 
-# Helper function to create a fresh DB session for background tasks
+# Helper function to create a fresh DB session per username for background tasks
 async def process_tweets_background(username: str, policy_rules: List[str]):
     """Process tweets using a dedicated database session per task."""
     print(f"🚀 STARTING BACKGROUND TASK for {username}")
@@ -42,7 +43,6 @@ async def process_tweets_background(username: str, policy_rules: List[str]):
 
 async def process_tweets_concurrently(usernames: List[str], policy_rules: List[str]):
     """Process multiple usernames concurrently."""
-    import asyncio
     
     # Create tasks for all usernames to process concurrently
     tasks = []
@@ -95,10 +95,11 @@ async def process_tweets(input_data: ProcessTweetsInput, background_tasks: Backg
 
 @tweet_router.get("/violations")
 async def get_violations(
-    start_date: Optional[datetime.datetime] = None,
-    end_date: Optional[datetime.datetime] = None,
-    policy: Optional[str] = None,
-    rule_id: Optional[str] = None,
+    start_date: Optional[datetime.datetime] = Query(None),
+    end_date: Optional[datetime.datetime] = Query(None),
+    username: Optional[str] = Query(None),
+    policy: Optional[str] = Query(None),
+    rule_id: Optional[str] = Query(None),
     limit: int = Query(100, ge=1, le=1000),
     offset: int = Query(0, ge=0),
     db: AsyncSession = Depends(get_db)
@@ -118,6 +119,7 @@ async def get_violations(
     
     if start_date:
         conditions.append(Violation.posted_at >= start_date)
+        print(start_date)
     
     if end_date:
         conditions.append(Violation.posted_at <= end_date)
@@ -127,6 +129,9 @@ async def get_violations(
     
     if rule_id:
         conditions.append(Violation.rule_id == rule_id)
+    
+    if username:
+        conditions.append(Violation.username == username)
     
     # Apply filters if any
     if conditions:
@@ -141,6 +146,7 @@ async def get_violations(
     violation_list = [
         {
             "id": v.id,
+            "username": v.username,
             "tweet": v.tweet,
             "policy": v.policy,
             "rule_id": v.rule_id,

@@ -6,6 +6,7 @@ class Violation(Base):
     __tablename__ = "violations"
 
     id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, default="")
     tweet = Column(Text, nullable=False)
     policy = Column(Text, nullable=False)
     rule_id = Column(String, nullable=False)

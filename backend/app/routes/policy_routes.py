@@ -18,8 +18,6 @@ policy_router = APIRouter(prefix="/policies", tags=["Policies"])
 async def load_policy_rules(policy_name: str) -> List[str]:
     """Load policy rules from a JSON file."""
     file_path = os.path.join(UPLOAD_DIR, f"{policy_name}.json")
-    print(os.getcwd())
-    print(file_path)
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail=f"Policy file '{policy_name}' not found")
     
@@ -104,8 +102,6 @@ async def upload_policy_file(file: UploadFile = File(...)):
 async def list_available_policies():
     """List all available compliance policy files."""
     try:
-        # Create upload directory if it doesn't exist
-        os.makedirs(UPLOAD_DIR, exist_ok=True)
         
         # Get all JSON files in the upload directory
         policy_files = [f.stem for f in Path(UPLOAD_DIR).glob("*.json")]
