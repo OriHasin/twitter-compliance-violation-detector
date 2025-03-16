@@ -1,14 +1,18 @@
 from openai import AsyncOpenAI
 import json
 from app.core.config import OPENAI_API_KEY
-
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 
 
 # Initialize client
 client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
-
+@retry(
+      stop=stop_after_attempt(3),                                       # Stop after 3 failed attempts
+      wait=wait_exponential(multiplier=1, min=2, max=60),               # Wait 2s, then 4s, then 8s...
+      retry=retry_if_exception_type((ConnectionError, TimeoutError))    # Only retry these errors
+)
 async def check_tweet_compliance(tweet: str, policy_rules: list):
     # Format each rule dictionary into a string
     rule_strings = []

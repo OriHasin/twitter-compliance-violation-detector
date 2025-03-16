@@ -1,12 +1,12 @@
 import tweepy
-from tweepy.errors import TooManyRequests
+from tweepy.errors import TooManyRequests, TwitterServerError
 import datetime
 import json
 from app.core.models import ScannedUser
 from app.core.config import TWITTER_BEARER_TOKEN, USE_SAMPLE_DATA
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 # Twitter API Authentication
 client = tweepy.Client(bearer_token=TWITTER_BEARER_TOKEN)
@@ -70,6 +70,21 @@ async def fetch_sample_tweets(username: str, db: AsyncSession):
 
 
 
+@retry(
+      stop=stop_after_attempt(3),
+      wait=wait_exponential(multiplier=1, min=2, max=30), 
+      retry=retry_if_exception_type((
+          ConnectionError, 
+          TimeoutError,
+          tweepy.errors.TwitterServerError
+      ))
+)
+async def fetch_tweets_page_with_retry(**kwargs):
+    return await client.search_recent_tweets(**kwargs)
+
+
+
+
 async def fetch_all_tweets(username: str, db: AsyncSession):
     # Check if we should use sample data for testing
     if USE_SAMPLE_DATA:
@@ -97,7 +112,7 @@ async def fetch_all_tweets(username: str, db: AsyncSession):
     while True:
         try:
             print(f'🔍 Fetching tweets for {username} from date: {last_scanned}')
-            tweets = client.search_recent_tweets(**kwargs)
+            tweets = await fetch_tweets_page_with_retry(**kwargs)
             print(f'🔍 Tweets response for {username}: {tweets}')
                 
             if tweets.data:
